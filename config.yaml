@@ -1,0 +1,10 @@
+ENV: local
+Name: car-record
+Port: 8081
+ConnectionStrings:
+  Mysql:
+    Host: localhost
+    Port: 3306
+    Database: car-project
+    User: user
+    Password: 1234Qwer
