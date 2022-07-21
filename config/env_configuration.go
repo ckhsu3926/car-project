@@ -24,6 +24,7 @@ type envConfiguration struct {
 	Env               string            `env:"env" validate:"required"`
 	Name              string            `env:"name" validate:"required"`
 	Port              string            `env:"port" validate:"required"`
+	FrontEndDir       string            `env:"frontenddir" validate:"required"`
 	ConnectionStrings ConnectionStrings `env:"connectionstrings" validate:"required"`
 }
 

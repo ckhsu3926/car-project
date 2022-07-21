@@ -1,6 +1,7 @@
 ENV: local
 Name: car-record
 Port: 8081
+FrontEndDir: ./app/.quasar-project/dist/spa
 ConnectionStrings:
   Mysql:
     Host: localhost
