@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -10,12 +9,16 @@ import (
 
 	_ "car-record/docs"
 
+	"car-record/config"
+
 	swaggerfiles "github.com/swaggo/files"     // swagger embed files
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
 
 	_middleware "car-record/middleware"
 
-	"car-record/config"
+	_userDeliveryHttp "car-record/domain/User/delivery/http"
+	_userRepositoryMysql "car-record/domain/User/repository/mysql"
+	_userUsecase "car-record/domain/User/usecase"
 )
 
 var mysqlConnection *gorm.DB
@@ -49,9 +52,10 @@ func main() {
 
 	// api
 	apiRouter := r.Group("api")
-	apiRouter.GET("test", func(c *gin.Context) {
-		c.Status(http.StatusOK)
-	})
+
+	userRepo := _userRepositoryMysql.NewMysqlUserRepository(mysqlConnection)
+	userUsecase := _userUsecase.NewUserUsecase(userRepo, timeContext)
+	_userDeliveryHttp.NewUserHttpHandler(apiRouter, userUsecase)
 
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

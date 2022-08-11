@@ -48,7 +48,7 @@ swaggo:
 ifndef SWAGGO_VERSION
 	@echo "Swaggo not installed. Please run \"make swaggo-install\""
 else
-	cd "$(PROJECT_ROOT_DIR)" && swag init -g ./app/main.go
+	cd "$(PROJECT_ROOT_DIR)" && swag init -g ./app/main.go && swag fmt -g ./app/main.go
 endif
 	@exit 0
 
