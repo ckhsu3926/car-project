@@ -41,6 +41,9 @@ func (uc *userUsecase) Login(ctx context.Context, username string, password stri
 
 	token = createToken(username, password)
 	err = uc.userRepo.UpdateToken(ctx, user.Username, token)
+	if err != nil {
+		token = ""
+	}
 
 	return
 }
