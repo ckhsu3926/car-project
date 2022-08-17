@@ -1,7 +1,10 @@
 <template>
   <q-dialog v-model="isLogin" :persistent="true">
-    <q-card>
+    <q-card class="q-pa-xs">
       <q-form ref="formRef" @submit="login">
+        <q-card-section>
+          <div class="text-h6">Login</div>
+        </q-card-section>
         <q-card-section>
           <q-input
             v-model="userInfo.username"
@@ -37,10 +40,14 @@
   </q-dialog>
 </template>
 
+<style lang="sass" scoped>
+.q-card
+    min-width: 360px
+</style>
+
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { QForm } from 'quasar';
-
 import loginStore from 'stores/login';
 
 export default defineComponent({

@@ -11,7 +11,9 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Car Project </q-toolbar-title>
+        <q-toolbar-title>
+          <q-btn flat to="/">Car Project</q-btn>
+        </q-toolbar-title>
 
         <div>v{{ appVersion }}</div>
       </q-toolbar>
@@ -36,7 +38,7 @@
       <router-view />
     </q-page-container>
 
-    <LoginBox />
+    <FixedBox />
   </q-layout>
 </template>
 
@@ -44,7 +46,7 @@
 import { defineComponent, ref } from 'vue';
 import packageInfo from 'app/package.json';
 import EssentialLink from 'components/EssentialLink.vue';
-import LoginBox from 'components/fixed/LoginBox.vue';
+import FixedBox from 'layouts/FixedBox.vue';
 import loginStore from 'stores/login';
 
 const linksList = [
@@ -52,31 +54,19 @@ const linksList = [
     title: 'User',
     caption: 'User Info',
     icon: 'person',
-    link: '/user',
+    to: '/user',
   },
   {
     title: 'Gas Station',
     caption: 'Gas Station List in common use',
     icon: 'storefront',
-    link: '/store',
+    to: '/store',
   },
   {
     title: 'Vehicle List',
     caption: '',
     icon: 'directions_car',
-    link: '/vehicle',
-  },
-  {
-    title: 'Refueling Record',
-    caption: '',
-    icon: 'local_gas_station',
-    link: '/refuel',
-  },
-  {
-    title: 'Maintenance Record',
-    caption: '',
-    icon: 'build',
-    link: '/maintain',
+    to: '/vehicle',
   },
 ];
 
@@ -85,7 +75,7 @@ export default defineComponent({
 
   components: {
     EssentialLink,
-    LoginBox,
+    FixedBox,
   },
 
   setup() {

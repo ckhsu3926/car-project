@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosResponse, AxiosInstance } from 'axios';
 
+import { Dialog } from 'quasar';
 import loginStore from 'stores/login';
 const { token } = loginStore();
 
@@ -36,4 +37,42 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+async function axiosRequest(method: string, url: string, data: null | unknown = null): Promise<{result: number, data: unknown, error: string}> {
+  method = method.toLowerCase()
+
+  let req: Promise<AxiosResponse<unknown>>;
+  switch (method) {
+    case 'post':
+      req = api.post(url, data);
+      break
+    case 'delete':
+      req = api.delete(url, { params: data });
+      break
+    case 'put':
+      req = api.put(url, data);
+      break
+    case 'patch':
+      req = api.patch(url, data);
+      break
+    case 'get':
+    default:
+      req = api.get(url, { params: data });
+  }
+  
+  let res: AxiosResponse | undefined
+  try {
+    res = await req
+  } catch (error) {
+    if(axios.isAxiosError(error)) {
+      res = error.response
+      Dialog.create({
+        title: 'Alert',
+        message: res?.data.error,
+      });
+    }
+  }
+
+  return res?.data
+}
+
+export { api, axiosRequest };

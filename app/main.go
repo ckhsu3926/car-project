@@ -19,6 +19,9 @@ import (
 	_userDeliveryHttp "car-record/domain/User/delivery/http"
 	_userRepositoryMysql "car-record/domain/User/repository/mysql"
 	_userUsecase "car-record/domain/User/usecase"
+	_vehicleDeliveryHttp "car-record/domain/Vehicle/delivery/http"
+	_vehicleRepositoryMysql "car-record/domain/Vehicle/repository/mysql"
+	_vehicleUsecase "car-record/domain/Vehicle/usecase"
 )
 
 var mysqlConnection *gorm.DB
@@ -56,6 +59,14 @@ func main() {
 	userRepo := _userRepositoryMysql.NewMysqlUserRepository(mysqlConnection)
 	userUsecase := _userUsecase.NewUserUsecase(userRepo, timeContext)
 	_userDeliveryHttp.NewUserHttpHandler(apiRouter, userUsecase)
+
+	// need authorize api
+	authorizeMiddleware := _middleware.NewAuthorizeMiddleware(userUsecase)
+	authorizedApiRouter := apiRouter.Group("", authorizeMiddleware.Authorize())
+
+	vehicleRepo := _vehicleRepositoryMysql.NewMysqlVehicleRepository(mysqlConnection)
+	vehicleUsecase := _vehicleUsecase.NewVehicleUsecase(vehicleRepo, timeContext)
+	_vehicleDeliveryHttp.NewVehicleHttpHandler(authorizedApiRouter.Group("vehicle"), vehicleUsecase)
 
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
