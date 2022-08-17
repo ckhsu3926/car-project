@@ -34,14 +34,14 @@ type registerResponse struct {
 // @Summary      Register
 // @Description  Create account and get login token
 // @Tags         user
-// @Param        body  body     registerBody  false  "post body"
-// @Success      200   {array}  registerResponse
+// @Param        body  body      registerBody  false  "post body"
+// @Success      200   {object}  registerResponse
 // @Router       /api/register [post]
 func (h *userHttpHandler) Register(c *gin.Context) {
 	response := registerResponse{}
 
 	var body registerBody
-	err := c.BindJSON(&body)
+	err := c.ShouldBindJSON(&body)
 	if err != nil {
 		response.Error = err.Error()
 		c.AbortWithStatusJSON(400, response)
@@ -54,6 +54,7 @@ func (h *userHttpHandler) Register(c *gin.Context) {
 		return
 	}
 
+	response.Result = 1
 	c.AbortWithStatusJSON(200, response)
 }
 
@@ -70,14 +71,14 @@ type loginResponse struct {
 // @Summary      Login
 // @Description  Login and get login token
 // @Tags         user
-// @Param        body  body     registerBody  false  "post body"
-// @Success      200   {array}  registerResponse
+// @Param        body  body      registerBody  false  "post body"
+// @Success      200   {object}  registerResponse
 // @Router       /api/login [post]
 func (h *userHttpHandler) Login(c *gin.Context) {
 	response := loginResponse{}
 
 	var body loginBody
-	err := c.BindJSON(&body)
+	err := c.ShouldBindJSON(&body)
 	if err != nil {
 		response.Error = err.Error()
 		c.AbortWithStatusJSON(400, response)
@@ -90,6 +91,7 @@ func (h *userHttpHandler) Login(c *gin.Context) {
 		return
 	}
 
+	response.Result = 1
 	c.AbortWithStatusJSON(200, response)
 }
 
@@ -97,7 +99,7 @@ func (h *userHttpHandler) Login(c *gin.Context) {
 // @Summary      Logout
 // @Description  get by header token and remove db token
 // @Tags         user
-// @Success      200   {}
+// @Success      200
 // @Router       /api/logout [post]
 func (h *userHttpHandler) Logout(c *gin.Context) {
 	response := loginResponse{}

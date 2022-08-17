@@ -13,6 +13,7 @@ type GinResponse struct {
 	Error  string      `json:"error,omitempty"`
 }
 
+// Print error debug and abort with 400 response
 func (res *GinResponse) ErrorResponse(c *gin.Context, err error) {
 	res.Result = 0
 	res.Error = err.Error()
