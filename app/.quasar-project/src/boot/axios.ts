@@ -37,34 +37,38 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-async function axiosRequest(method: string, url: string, data: null | unknown = null): Promise<{result: number, data: unknown, error: string}> {
-  method = method.toLowerCase()
+async function axiosRequest(
+  method: string,
+  url: string,
+  data: null | unknown = null
+): Promise<{ result: number; data: unknown; error: string }> {
+  method = method.toLowerCase();
 
   let req: Promise<AxiosResponse<unknown>>;
   switch (method) {
     case 'post':
       req = api.post(url, data);
-      break
+      break;
     case 'delete':
       req = api.delete(url, { params: data });
-      break
+      break;
     case 'put':
       req = api.put(url, data);
-      break
+      break;
     case 'patch':
       req = api.patch(url, data);
-      break
+      break;
     case 'get':
     default:
       req = api.get(url, { params: data });
   }
-  
-  let res: AxiosResponse | undefined
+
+  let res: AxiosResponse | undefined;
   try {
-    res = await req
+    res = await req;
   } catch (error) {
-    if(axios.isAxiosError(error)) {
-      res = error.response
+    if (axios.isAxiosError(error)) {
+      res = error.response;
       Dialog.create({
         title: 'Alert',
         message: res?.data.error,
@@ -72,7 +76,7 @@ async function axiosRequest(method: string, url: string, data: null | unknown = 
     }
   }
 
-  return res?.data
+  return res?.data;
 }
 
 export { api, axiosRequest };
