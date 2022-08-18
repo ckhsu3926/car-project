@@ -52,12 +52,29 @@ func TestRegister(t *testing.T) {
 		assert.EqualError(t, err, `username already exist`)
 		_mockUserRepo.AssertExpectations(t)
 	})
+	t.Run("failed: register failed", func(t *testing.T) {
+		_mockUserRepo.On("IsUsernameExist",
+			mock.AnythingOfType("*context.emptyCtx"), // ctx
+			mock.AnythingOfType("string"),            // username
+		).Return(false).Once()
+		_mockUserRepo.On("Create",
+			mock.AnythingOfType("*context.emptyCtx"), // ctx
+			mock.AnythingOfType("string"),            // username
+			mock.AnythingOfType("string"),            // password
+			mock.AnythingOfType("string"),            // token
+		).Return(errors.New(`insert failed`)).Once()
+
+		token, err := _mockUserUsecase.Register(context.TODO(), mockUsername, mockPassword)
+
+		assert.Empty(t, token)
+		assert.EqualError(t, err, `insert failed`)
+		_mockUserRepo.AssertExpectations(t)
+	})
 }
 
 func TestLogin(t *testing.T) {
 	var _mockUserRepo = mocks.NewUserRepository(t)
 	var _mockUserUsecase = usecase.NewUserUsecase(_mockUserRepo, timeout)
-	mockUsername, mockPassword := "user", "password"
 
 	t.Run("success", func(t *testing.T) {
 		_mockUserRepo.On("Get",

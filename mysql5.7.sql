@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `car-project`.`vehicle` (
   `license` VARCHAR(20) NOT NULL COMMENT '車牌號碼',
   `company` VARCHAR(45) NULL DEFAULT '' COMMENT '廠牌',
   `model` VARCHAR(45) NULL DEFAULT '' COMMENT '款式',
-  `engine_displacement` INT(5) UNSIGNED NULL DEFAULT 0 COMMENT '排氣量',
+  `engine_displacement` DECIMAL(5,1) UNSIGNED NULL DEFAULT 0 COMMENT '排氣量',
   `engine_number` VARCHAR(45) NULL DEFAULT '' COMMENT '引擎號碼',
   `default_octane_number` INT(4) UNSIGNED NULL DEFAULT 95 COMMENT '預設辛烷值',
   `purchase` INT(10) UNSIGNED ZEROFILL NULL DEFAULT 0 COMMENT '購入金額',

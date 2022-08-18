@@ -19,7 +19,7 @@ type VehicleDetail struct {
 	License             string          `json:"license"`
 	Company             string          `json:"company"`
 	Model               string          `json:"model"`
-	EngineDisplacement  int             `json:"engineDisplacement"`
+	EngineDisplacement  decimal.Decimal `json:"engineDisplacement"`
 	EngineNumber        string          `json:"engineNumber"`
 	DefaultOctaneNumber int             `json:"defaultOctaneNumber"`
 	Purchase            int             `json:"purchase"`

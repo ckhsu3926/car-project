@@ -20,7 +20,7 @@ type vehicle struct {
 	License             string          `gorm:"not null;column:license"`
 	Company             string          `gorm:"column:company"`
 	Model               string          `gorm:"column:model"`
-	EngineDisplacement  int             `gorm:"column:engine_displacement"`
+	EngineDisplacement  decimal.Decimal `gorm:"column:engine_displacement"`
 	EngineNumber        string          `gorm:"column:engine_number"`
 	DefaultOctaneNumber int             `gorm:"column:default_octane_number"`
 	Purchase            int             `gorm:"column:purchase"`
@@ -83,22 +83,22 @@ func (r *mysqlVehicleRepository) Get(ctx context.Context, userID uint, id uint) 
 	}
 
 	v = entities.VehicleDetail{
-		ID:                  v.ID,
-		Name:                v.Name,
-		License:             v.License,
-		Company:             v.Company,
-		Model:               v.Model,
-		EngineDisplacement:  v.EngineDisplacement,
-		EngineNumber:        v.EngineNumber,
-		DefaultOctaneNumber: v.DefaultOctaneNumber,
-		Purchase:            v.Purchase,
-		PurchaseDate:        v.PurchaseDate,
-		PurchaseLocation:    v.PurchaseLocation,
-		PurchaseMileage:     v.PurchaseMileage,
-		Sold:                v.Sold,
-		SoldDate:            v.SoldDate,
-		SoldMileage:         v.SoldMileage,
-		MileageReset:        v.MileageReset,
+		ID:                  result.ID,
+		Name:                result.Name,
+		License:             result.License,
+		Company:             result.Company,
+		Model:               result.Model,
+		EngineDisplacement:  result.EngineDisplacement,
+		EngineNumber:        result.EngineNumber,
+		DefaultOctaneNumber: result.DefaultOctaneNumber,
+		Purchase:            result.Purchase,
+		PurchaseDate:        result.PurchaseDate,
+		PurchaseLocation:    result.PurchaseLocation,
+		PurchaseMileage:     result.PurchaseMileage,
+		Sold:                result.Sold,
+		SoldDate:            result.SoldDate,
+		SoldMileage:         result.SoldMileage,
+		MileageReset:        result.MileageReset,
 	}
 
 	return

@@ -29,6 +29,9 @@ func (uc *userUsecase) Register(ctx context.Context, username string, password s
 	}
 	token = createToken(username, password)
 	err = uc.userRepo.Create(ctx, username, password, token)
+	if err != nil {
+		token = ""
+	}
 
 	return
 }

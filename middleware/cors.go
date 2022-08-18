@@ -12,7 +12,7 @@ func (m *CORSMiddleware) CORS() gin.HandlerFunc {
 		AllowAllOrigins: true,
 		// AllowOrigins:    []string{},
 		// AllowOriginFunc: func(origin string) bool {},
-		AllowMethods:     []string{"GET", "POST"},
+		AllowMethods:     []string{"GET", "POST", "PUT"},
 		AllowHeaders:     []string{"content-type", "token"},
 		AllowCredentials: false,
 		// ExposeHeaders:          []string{},

@@ -21,13 +21,7 @@
       </q-card-section>
 
       <q-card-actions align="evenly">
-        <q-btn
-          flat
-          color="primary"
-          label="Add"
-          type="submit"
-          :disable="IsAddFormSubmitting"
-        />
+        <q-btn flat color="primary" label="Add" type="submit" :disable="IsDialogFormSubmitting" />
       </q-card-actions>
     </q-form>
   </q-card>
@@ -46,12 +40,12 @@ export default defineComponent({
   name: 'LoginBoxAdd',
 
   setup() {
-    const { AddForm, OnAddSubmit, IsAddFormSubmitting } = vehicleStore();
+    const { AddForm, OnAddSubmit, IsDialogFormSubmitting } = vehicleStore();
 
     return {
       AddForm,
       OnAddSubmit,
-      IsAddFormSubmitting,
+      IsDialogFormSubmitting,
     };
   },
 });

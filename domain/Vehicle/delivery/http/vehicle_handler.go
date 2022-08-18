@@ -42,7 +42,7 @@ type editBody struct {
 	License             string          `json:"license"`
 	Company             string          `json:"company"`
 	Model               string          `json:"model"`
-	EngineDisplacement  int             `json:"engineDisplacement"`
+	EngineDisplacement  decimal.Decimal `json:"engineDisplacement"`
 	EngineNumber        string          `json:"engineNumber"`
 	DefaultOctaneNumber int             `json:"defaultOctaneNumber"`
 	Purchase            int             `json:"purchase"`
@@ -120,7 +120,7 @@ func (h *vehicleHttpHandler) Add(c *gin.Context) {
 		return
 	}
 
-	addErr := h.VUsecase.Add(c.Request.Context(), user.ID, body.Name, body.Licence, body.Company, body.Licence)
+	addErr := h.VUsecase.Add(c.Request.Context(), user.ID, body.Name, body.Licence, body.Company, body.Model)
 	if addErr != nil {
 		response.ErrorResponse(c, addErr)
 		return
