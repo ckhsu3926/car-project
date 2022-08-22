@@ -40,7 +40,7 @@ func TestRegister(t *testing.T) {
 		_mockUserRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: user_aleady_exist", func(t *testing.T) {
+	t.Run("failed:_user_aleady_exist", func(t *testing.T) {
 		_mockUserRepo.On("IsUsernameExist",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // username
@@ -52,7 +52,7 @@ func TestRegister(t *testing.T) {
 		assert.EqualError(t, err, `username already exist`)
 		_mockUserRepo.AssertExpectations(t)
 	})
-	t.Run("failed: register failed", func(t *testing.T) {
+	t.Run("failed:_register_failed", func(t *testing.T) {
 		_mockUserRepo.On("IsUsernameExist",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // username
@@ -95,7 +95,7 @@ func TestLogin(t *testing.T) {
 		_mockUserRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: user not exist", func(t *testing.T) {
+	t.Run("failed:_user_not_exist", func(t *testing.T) {
 		_mockUserRepo.On("Get",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // username
@@ -108,7 +108,7 @@ func TestLogin(t *testing.T) {
 		assert.EqualError(t, err, `record not found`)
 		_mockUserRepo.AssertExpectations(t)
 	})
-	t.Run("failed: update token failed", func(t *testing.T) {
+	t.Run("failed:_update_token_failed", func(t *testing.T) {
 		_mockUserRepo.On("Get",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // username
@@ -149,7 +149,7 @@ func TestLogout(t *testing.T) {
 		_mockUserRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: token not exist", func(t *testing.T) {
+	t.Run("failed:_token_not_exist", func(t *testing.T) {
 		_mockUserRepo.On("GetByToken",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // token
@@ -160,7 +160,7 @@ func TestLogout(t *testing.T) {
 		assert.EqualError(t, err, `record not found`)
 		_mockUserRepo.AssertExpectations(t)
 	})
-	t.Run("failed: update token failed", func(t *testing.T) {
+	t.Run("failed:_update_token_failed", func(t *testing.T) {
 		_mockUserRepo.On("GetByToken",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // token
@@ -195,7 +195,7 @@ func TestAuthorize(t *testing.T) {
 		_mockUserRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: token not exist", func(t *testing.T) {
+	t.Run("failed:_token_not_exist", func(t *testing.T) {
 		_mockUserRepo.On("GetByToken",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("string"),            // token
