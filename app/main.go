@@ -19,6 +19,9 @@ import (
 	_userDeliveryHttp "car-record/domain/User/delivery/http"
 	_userRepositoryMysql "car-record/domain/User/repository/mysql"
 	_userUsecase "car-record/domain/User/usecase"
+	_userGasStationDeliveryHttp "car-record/domain/UserGasStation/delivery/http"
+	_userGasStationRepositoryMysql "car-record/domain/UserGasStation/repository/mysql"
+	_userGasStationUsecase "car-record/domain/UserGasStation/usecase"
 	_vehicleDeliveryHttp "car-record/domain/Vehicle/delivery/http"
 	_vehicleRepositoryMysql "car-record/domain/Vehicle/repository/mysql"
 	_vehicleUsecase "car-record/domain/Vehicle/usecase"
@@ -67,6 +70,10 @@ func main() {
 	vehicleRepo := _vehicleRepositoryMysql.NewMysqlVehicleRepository(mysqlConnection)
 	vehicleUsecase := _vehicleUsecase.NewVehicleUsecase(vehicleRepo, timeContext)
 	_vehicleDeliveryHttp.NewVehicleHttpHandler(authorizedApiRouter.Group("vehicle"), vehicleUsecase)
+
+	userGasStationRepo := _userGasStationRepositoryMysql.NewMysqlUserGasStationRepository(mysqlConnection)
+	userGasStationUsecase := _userGasStationUsecase.NewUserGasStationUsecase(userGasStationRepo, timeContext)
+	_userGasStationDeliveryHttp.NewUserGasStationHttpHandler(authorizedApiRouter.Group("user").Group("gas").Group("station"), userGasStationUsecase)
 
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
