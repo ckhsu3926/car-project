@@ -16,6 +16,12 @@ import (
 
 	_middleware "car-record/middleware"
 
+	_maintenanceDeliveryHttp "car-record/domain/Maintenance/delivery/http"
+	_maintenanceRepositoryMysql "car-record/domain/Maintenance/repository/mysql"
+	_maintenanceUsecase "car-record/domain/Maintenance/usecase"
+	_refuelingDeliveryHttp "car-record/domain/Refueling/delivery/http"
+	_refuelingRepositoryMysql "car-record/domain/Refueling/repository/mysql"
+	_refuelingUsecase "car-record/domain/Refueling/usecase"
 	_userDeliveryHttp "car-record/domain/User/delivery/http"
 	_userRepositoryMysql "car-record/domain/User/repository/mysql"
 	_userUsecase "car-record/domain/User/usecase"
@@ -78,6 +84,10 @@ func main() {
 	refuelingRepo := _refuelingRepositoryMysql.NewMysqlRefuelingRepository(mysqlConnection)
 	refuelingUsecase := _refuelingUsecase.NewRefuelingUsecase(refuelingRepo, timeContext)
 	_refuelingDeliveryHttp.NewRefuelingHttpHandler(authorizedApiRouter.Group("refueling"), refuelingUsecase)
+
+	maintenanceRepo := _maintenanceRepositoryMysql.NewMysqlMaintenanceRepository(mysqlConnection)
+	maintenanceUsecase := _maintenanceUsecase.NewMaintenanceUsecase(maintenanceRepo, timeContext)
+	_maintenanceDeliveryHttp.NewMaintenanceHttpHandler(authorizedApiRouter.Group("mantenance"), maintenanceUsecase)
 
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
