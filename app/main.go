@@ -75,6 +75,10 @@ func main() {
 	userGasStationUsecase := _userGasStationUsecase.NewUserGasStationUsecase(userGasStationRepo, timeContext)
 	_userGasStationDeliveryHttp.NewUserGasStationHttpHandler(authorizedApiRouter.Group("user").Group("gas").Group("station"), userGasStationUsecase)
 
+	refuelingRepo := _refuelingRepositoryMysql.NewMysqlRefuelingRepository(mysqlConnection)
+	refuelingUsecase := _refuelingUsecase.NewRefuelingUsecase(refuelingRepo, timeContext)
+	_refuelingDeliveryHttp.NewRefuelingHttpHandler(authorizedApiRouter.Group("refueling"), refuelingUsecase)
+
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
