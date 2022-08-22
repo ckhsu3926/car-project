@@ -35,14 +35,16 @@ type VehicleDetail struct {
 type VehicleUsecase interface {
 	Add(ctx context.Context, userID uint, name, license, company, model string) (err error)
 	GetList(ctx context.Context, userID uint) (list []Vehicle, err error)
-	Get(ctx context.Context, userID uint, id string) (vehicle VehicleDetail, err error)
+	Get(ctx context.Context, id uint) (vehicle VehicleDetail, err error)
 	Edit(ctx context.Context, userID uint, vehicle VehicleDetail) (err error)
+	Delete(ctx context.Context, id uint) (err error)
 }
 
 type VehicleRepository interface {
 	Add(ctx context.Context, userID uint, name, license, company, model string) (err error)
 	GetList(ctx context.Context, userID uint) (list []Vehicle, err error)
-	Get(ctx context.Context, userID uint, id uint) (vehicle VehicleDetail, err error)
+	Get(ctx context.Context, id uint) (vehicle VehicleDetail, err error)
 	Edit(ctx context.Context, userID uint, vehicle VehicleDetail) (err error)
+	Delete(ctx context.Context, id uint) (err error)
 	IsLicenseExist(ctx context.Context, userID uint, license string) bool
 }

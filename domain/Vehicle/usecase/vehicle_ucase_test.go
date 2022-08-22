@@ -16,8 +16,8 @@ import (
 )
 
 var timeout = time.Duration(2) * time.Second
-var mockUserID uint = 4
-var mockVehicleID, mockName, mockLicense, mockCompany, mockModel = "6", "mockName", "mock License", "mock Company", "mock Model"
+var mockUserID, mockVehicleID uint = 4, 6
+var mockName, mockLicense, mockCompany, mockModel = "mockName", "mock License", "mock Company", "mock Model"
 var mockVehicle = entities.VehicleDetail{
 	ID:                 6,
 	Name:               mockName,
@@ -54,7 +54,7 @@ func TestAdd(t *testing.T) {
 		_mockVehicleRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: license_aleady_exist", func(t *testing.T) {
+	t.Run("failed:_license_aleady_exist", func(t *testing.T) {
 		_mockVehicleRepo.On("IsLicenseExist",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("uint"),              // user id
@@ -66,7 +66,7 @@ func TestAdd(t *testing.T) {
 		assert.EqualError(t, err, `license already exist`)
 		_mockVehicleRepo.AssertExpectations(t)
 	})
-	t.Run("failed: add_failed", func(t *testing.T) {
+	t.Run("failed:_add_failed", func(t *testing.T) {
 		_mockVehicleRepo.On("IsLicenseExist",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("uint"),              // user id
@@ -105,7 +105,7 @@ func TestGetList(t *testing.T) {
 		_mockVehicleRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: query failed", func(t *testing.T) {
+	t.Run("failed:_query_failed", func(t *testing.T) {
 		_mockVehicleRepo.On("GetList",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
 			mock.AnythingOfType("uint"),              // user id
@@ -126,31 +126,23 @@ func TestGet(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		_mockVehicleRepo.On("Get",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
-			mock.AnythingOfType("uint"),              // user id
 			mock.AnythingOfType("uint"),              // vehicle id
 		).Return(entities.VehicleDetail{ID: 2}, nil).Once()
 
-		vehicle, err := _mockVehicleUsecase.Get(context.TODO(), mockUserID, mockVehicleID)
+		vehicle, err := _mockVehicleUsecase.Get(context.TODO(), mockVehicleID)
 
 		assert.NotEqual(t, vehicle.ID, 2)
 		assert.NoError(t, err)
 		_mockVehicleRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: input invalid vehicle id", func(t *testing.T) {
-		_, err := _mockVehicleUsecase.Get(context.TODO(), mockUserID, "not uint")
-
-		assert.Contains(t, err.Error(), "invalid syntax")
-		_mockVehicleRepo.AssertExpectations(t)
-	})
-	t.Run("failed: query failed", func(t *testing.T) {
+	t.Run("failed:_query_failed", func(t *testing.T) {
 		_mockVehicleRepo.On("Get",
 			mock.AnythingOfType("*context.emptyCtx"), // ctx
-			mock.AnythingOfType("uint"),              // user id
 			mock.AnythingOfType("uint"),              // vehicle id
 		).Return(entities.VehicleDetail{}, errors.New(queryFailedReason)).Once()
 
-		_, err := _mockVehicleUsecase.Get(context.TODO(), mockUserID, mockVehicleID)
+		_, err := _mockVehicleUsecase.Get(context.TODO(), mockVehicleID)
 
 		assert.EqualError(t, err, queryFailedReason)
 		_mockVehicleRepo.AssertExpectations(t)
@@ -174,7 +166,7 @@ func TestEdit(t *testing.T) {
 		_mockVehicleRepo.AssertExpectations(t)
 	})
 
-	t.Run("failed: query failed", func(t *testing.T) {
+	t.Run("failed:_save_failed", func(t *testing.T) {
 		_mockVehicleRepo.On("Edit",
 			mock.AnythingOfType("*context.emptyCtx"),      // ctx
 			mock.AnythingOfType("uint"),                   // user id
@@ -184,6 +176,35 @@ func TestEdit(t *testing.T) {
 		err := _mockVehicleUsecase.Edit(context.TODO(), mockUserID, mockVehicle)
 
 		assert.EqualError(t, err, queryFailedReason)
+		_mockVehicleRepo.AssertExpectations(t)
+	})
+}
+
+func TestDelete(t *testing.T) {
+	var _mockVehicleRepo = mocks.NewVehicleRepository(t)
+	var _mockVehicleUsecase = usecase.NewVehicleUsecase(_mockVehicleRepo, timeout)
+
+	t.Run("success", func(t *testing.T) {
+		_mockVehicleRepo.On("Delete",
+			mock.AnythingOfType("*context.emptyCtx"), // ctx
+			mock.AnythingOfType("uint"),              // vehicle id
+		).Return(nil).Once()
+
+		err := _mockVehicleUsecase.Delete(context.TODO(), mockVehicleID)
+
+		assert.NoError(t, err)
+		_mockVehicleRepo.AssertExpectations(t)
+	})
+
+	t.Run("failed:_delete_failed", func(t *testing.T) {
+		_mockVehicleRepo.On("Delete",
+			mock.AnythingOfType("*context.emptyCtx"), // ctx
+			mock.AnythingOfType("uint"),              // vehicle id
+		).Return(errors.New(`delete failed`)).Once()
+
+		err := _mockVehicleUsecase.Delete(context.TODO(), mockVehicleID)
+
+		assert.EqualError(t, err, `delete failed`)
 		_mockVehicleRepo.AssertExpectations(t)
 	})
 }

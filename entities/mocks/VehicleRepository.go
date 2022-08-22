@@ -28,6 +28,20 @@ func (_m *VehicleRepository) Add(ctx context.Context, userID uint, name string, 
 	return r0
 }
 
+// Delete provides a mock function with given fields: ctx, id
+func (_m *VehicleRepository) Delete(ctx context.Context, id uint) error {
+	ret := _m.Called(ctx, id)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, uint) error); ok {
+		r0 = rf(ctx, id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // Edit provides a mock function with given fields: ctx, userID, vehicle
 func (_m *VehicleRepository) Edit(ctx context.Context, userID uint, vehicle entities.VehicleDetail) error {
 	ret := _m.Called(ctx, userID, vehicle)
@@ -42,20 +56,20 @@ func (_m *VehicleRepository) Edit(ctx context.Context, userID uint, vehicle enti
 	return r0
 }
 
-// Get provides a mock function with given fields: ctx, userID, id
-func (_m *VehicleRepository) Get(ctx context.Context, userID uint, id uint) (entities.VehicleDetail, error) {
-	ret := _m.Called(ctx, userID, id)
+// Get provides a mock function with given fields: ctx, id
+func (_m *VehicleRepository) Get(ctx context.Context, id uint) (entities.VehicleDetail, error) {
+	ret := _m.Called(ctx, id)
 
 	var r0 entities.VehicleDetail
-	if rf, ok := ret.Get(0).(func(context.Context, uint, uint) entities.VehicleDetail); ok {
-		r0 = rf(ctx, userID, id)
+	if rf, ok := ret.Get(0).(func(context.Context, uint) entities.VehicleDetail); ok {
+		r0 = rf(ctx, id)
 	} else {
 		r0 = ret.Get(0).(entities.VehicleDetail)
 	}
 
 	var r1 error
-	if rf, ok := ret.Get(1).(func(context.Context, uint, uint) error); ok {
-		r1 = rf(ctx, userID, id)
+	if rf, ok := ret.Get(1).(func(context.Context, uint) error); ok {
+		r1 = rf(ctx, id)
 	} else {
 		r1 = ret.Error(1)
 	}

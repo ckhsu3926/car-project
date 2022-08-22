@@ -4,6 +4,7 @@ import (
 	"car-record/entities"
 	"car-record/middleware"
 	"car-record/tools"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/shopspring/decimal"
@@ -22,6 +23,7 @@ func NewVehicleHttpHandler(r *gin.RouterGroup, vu entities.VehicleUsecase) {
 	r.POST("/add", handler.Add)
 	r.PUT("/edit", handler.Edit)
 	r.GET("/list", handler.GetList)
+	r.DELETE("/delete", handler.Delete)
 }
 
 type getDetailResponse struct {
@@ -64,27 +66,21 @@ type getListResponse struct {
 // @Summary      Get Vehicle
 // @Description  Get User's Vehicle Detail
 // @Tags         vehicle
-// @Param        vehicleID  path      uint  true  "Vehicle ID"
+// @Param        vehicleID  query     uint  true  "Vehicle ID"
 // @Success      200        {object}  getDetailResponse
 // @Router       /api/vehicle/ [get]
 func (h *vehicleHttpHandler) Get(c *gin.Context) {
 	response := getDetailResponse{}
 
-	user, getMiddlewareAuthorizeErr := middleware.GetMiddlewareAuthorize(c)
-	if getMiddlewareAuthorizeErr != nil {
-		response.Error = getMiddlewareAuthorizeErr.Error()
+	vehicleIDString := c.Query("vehicleID")
+	vehicleID, atoiErr := strconv.Atoi(vehicleIDString)
+	if vehicleIDString == "" || atoiErr != nil {
+		response.Error = "invalid vehicle id"
 		c.AbortWithStatusJSON(400, response)
 		return
 	}
 
-	vehicleID := c.Query("vehicleID")
-	if vehicleID == "" {
-		response.Error = "required vehicle id"
-		c.AbortWithStatusJSON(400, response)
-		return
-	}
-
-	detail, getDetailErr := h.VUsecase.Get(c.Request.Context(), user.ID, vehicleID)
+	detail, getDetailErr := h.VUsecase.Get(c.Request.Context(), uint(vehicleID))
 	if getDetailErr != nil {
 		response.ErrorResponse(c, getDetailErr)
 		return
@@ -197,7 +193,7 @@ func (h *vehicleHttpHandler) Edit(c *gin.Context) {
 // @Summary      Get List
 // @Description  Get User's Vehicle List
 // @Tags         vehicle
-// @Success      200  {object}  getListResponse
+// @Success      200        {object}  getListResponse
 // @Router       /api/vehicle/list [get]
 func (h *vehicleHttpHandler) GetList(c *gin.Context) {
 	response := getListResponse{}
@@ -206,6 +202,48 @@ func (h *vehicleHttpHandler) GetList(c *gin.Context) {
 	if getMiddlewareAuthorizeErr != nil {
 		response.Error = getMiddlewareAuthorizeErr.Error()
 		c.AbortWithStatusJSON(400, response)
+		return
+	}
+
+	list, getListErr := h.VUsecase.GetList(c.Request.Context(), user.ID)
+	if getListErr != nil {
+		response.ErrorResponse(c, getListErr)
+		return
+	}
+
+	response.Data = list
+	response.Result = 1
+	c.AbortWithStatusJSON(200, response)
+}
+
+// Vehicle godoc
+// @Summary      Delete
+// @Description  Delete vehicle
+// @Tags         vehicle
+// @Param        vehicleID  query     uint  true  "Vehicle ID"
+// @Success      200  {object}  getListResponse
+// @Router       /api/vehicle/delete [delete]
+func (h *vehicleHttpHandler) Delete(c *gin.Context) {
+	response := getListResponse{}
+
+	vehicleIDString := c.Query("vehicleID")
+	vehicleID, atoiErr := strconv.Atoi(vehicleIDString)
+	if vehicleIDString == "" || atoiErr != nil {
+		response.Error = "invalid vehicle id"
+		c.AbortWithStatusJSON(400, response)
+		return
+	}
+
+	user, getMiddlewareAuthorizeErr := middleware.GetMiddlewareAuthorize(c)
+	if getMiddlewareAuthorizeErr != nil {
+		response.Error = getMiddlewareAuthorizeErr.Error()
+		c.AbortWithStatusJSON(400, response)
+		return
+	}
+
+	deleteErr := h.VUsecase.Delete(c.Request.Context(), uint(vehicleID))
+	if deleteErr != nil {
+		response.ErrorResponse(c, deleteErr)
 		return
 	}
 

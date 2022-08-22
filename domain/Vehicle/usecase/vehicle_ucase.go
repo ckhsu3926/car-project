@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"errors"
-	"strconv"
 	"time"
 
 	"car-record/entities"
@@ -37,20 +36,20 @@ func (uc *vehicleUsecase) GetList(ctx context.Context, userID uint) (list []enti
 	return
 }
 
-func (uc *vehicleUsecase) Get(ctx context.Context, userID uint, id string) (vehicle entities.VehicleDetail, err error) {
-	uintID, parseUintErr := strconv.ParseUint(id, 10, 32)
-	if parseUintErr != nil {
-		err = parseUintErr
-		return
-	}
-
-	vehicle, err = uc.vehicleRepo.Get(ctx, userID, uint(uintID))
+func (uc *vehicleUsecase) Get(ctx context.Context, id uint) (vehicle entities.VehicleDetail, err error) {
+	vehicle, err = uc.vehicleRepo.Get(ctx, id)
 
 	return
 }
 
 func (uc *vehicleUsecase) Edit(ctx context.Context, userID uint, vehicle entities.VehicleDetail) (err error) {
 	err = uc.vehicleRepo.Edit(ctx, userID, vehicle)
+
+	return
+}
+
+func (uc *vehicleUsecase) Delete(ctx context.Context, id uint) (err error) {
+	err = uc.vehicleRepo.Delete(ctx, id)
 
 	return
 }

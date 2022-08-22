@@ -73,10 +73,10 @@ func (r *mysqlVehicleRepository) GetList(ctx context.Context, userID uint) (list
 	return
 }
 
-func (r *mysqlVehicleRepository) Get(ctx context.Context, userID uint, id uint) (v entities.VehicleDetail, err error) {
+func (r *mysqlVehicleRepository) Get(ctx context.Context, id uint) (v entities.VehicleDetail, err error) {
 	result := vehicle{}
 	err = r.Conn.WithContext(ctx).Model(&vehicle{}).
-		Where(&vehicle{ID: id, UserID: userID}).
+		Where(&vehicle{ID: id}).
 		First(&result).Error
 	if err != nil {
 		return
@@ -126,6 +126,13 @@ func (r *mysqlVehicleRepository) Edit(ctx context.Context, userID uint, v entiti
 	}
 
 	err = r.Conn.WithContext(ctx).Save(&record).Error
+
+	return
+}
+
+func (r *mysqlVehicleRepository) Delete(ctx context.Context, id uint) (err error) {
+	record := vehicle{ID: id}
+	err = r.Conn.WithContext(ctx).Delete(&record).Error
 
 	return
 }
