@@ -3,7 +3,7 @@ import axios, { AxiosResponse, AxiosInstance } from 'axios';
 
 import { Dialog } from 'quasar';
 import loginStore from 'stores/login';
-const { token } = loginStore();
+const { token, clean } = loginStore();
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -69,10 +69,15 @@ async function axiosRequest(
   } catch (error) {
     if (axios.isAxiosError(error)) {
       res = error.response;
-      Dialog.create({
-        title: 'Alert',
-        message: res?.data.error,
-      });
+
+      if (error.response?.status === 403) {
+        clean();
+      } else {
+        Dialog.create({
+          title: 'Alert',
+          message: res?.data.error,
+        });
+      }
     }
   }
 
