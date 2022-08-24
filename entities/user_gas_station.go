@@ -4,7 +4,7 @@ import "context"
 
 type UserGasStation struct {
 	ID     uint   `json:"id"`
-	UserID uint   `json:"userID"`
+	UserID uint   `json:"-"`
 	Name   string `json:"name"`
 }
 

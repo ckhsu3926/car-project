@@ -4,6 +4,7 @@ import (
 	"car-record/entities"
 	"car-record/middleware"
 	"car-record/tools"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,9 +25,6 @@ func NewUserGasStationHttpHandler(r *gin.RouterGroup, uu entities.UserGasStation
 
 type addBody struct {
 	Name string `json:"name" binding:"required"`
-}
-type deleteBody struct {
-	ID uint `json:"id" binding:"required"`
 }
 type addResponse struct {
 	tools.GinResponse
@@ -79,7 +77,7 @@ func (h *userGasStationHttpHandler) Add(c *gin.Context) {
 // @Summary      GetList
 // @Description  Get user's station record
 // @Tags         UserGasStation
-// @Success      200   {object}  addResponse
+// @Success      200       {object}  addResponse
 // @Router       /api/user/gas/station/list [get]
 func (h *userGasStationHttpHandler) GetList(c *gin.Context) {
 	response := addResponse{}
@@ -106,7 +104,7 @@ func (h *userGasStationHttpHandler) GetList(c *gin.Context) {
 // @Summary      Delete
 // @Description  Delete user's station record
 // @Tags         UserGasStation
-// @Param        body  body      deleteBody  false  "post body"
+// @Param        recordID  query     uint  true  "recordID"
 // @Success      200   {object}  addResponse
 // @Router       /api/user/gas/station/delete [delete]
 func (h *userGasStationHttpHandler) Delete(c *gin.Context) {
@@ -119,15 +117,15 @@ func (h *userGasStationHttpHandler) Delete(c *gin.Context) {
 		return
 	}
 
-	var body deleteBody
-	err := c.ShouldBindJSON(&body)
-	if err != nil {
-		response.Error = err.Error()
+	recordIDString := c.Query("recordID")
+	recordID, atoiErr := strconv.Atoi(recordIDString)
+	if recordIDString == "" || atoiErr != nil {
+		response.Error = "invalid vehicle id"
 		c.AbortWithStatusJSON(400, response)
 		return
 	}
 
-	deleteErr := h.UUsecase.Delete(c.Request.Context(), user.ID, body.ID)
+	deleteErr := h.UUsecase.Delete(c.Request.Context(), user.ID, uint(recordID))
 	if deleteErr != nil {
 		response.ErrorResponse(c, deleteErr)
 		return

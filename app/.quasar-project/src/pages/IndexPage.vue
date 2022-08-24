@@ -1,44 +1,39 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component active :todos="todos" :meta="meta" title="Example component" />
+  <q-page class="row content-center justify-center">
+    <IndexCard v-for="(item, index) in linksList" :key="`indexCardItem${index}`" v-bind="item" />
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
-import { defineComponent, ref } from 'vue';
+import IndexCard from 'components/IndexCard.vue';
+import { defineComponent } from 'vue';
+
+const linksList = [
+  {
+    title: 'User',
+    caption: 'User Info',
+    icon: 'person',
+    to: '/user',
+  },
+  {
+    title: 'Gas Station',
+    caption: 'Gas Station List in common use',
+    icon: 'storefront',
+    to: '/store',
+  },
+  {
+    title: 'Vehicle',
+    caption: 'Vehicle List',
+    icon: 'directions_car',
+    to: '/vehicle',
+  },
+];
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { ExampleComponent },
+  components: { IndexCard },
   setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1',
-      },
-      {
-        id: 2,
-        content: 'ct2',
-      },
-      {
-        id: 3,
-        content: 'ct3',
-      },
-      {
-        id: 4,
-        content: 'ct4',
-      },
-      {
-        id: 5,
-        content: 'ct5',
-      },
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200,
-    });
-    return { todos, meta };
+    return { linksList };
   },
 });
 </script>

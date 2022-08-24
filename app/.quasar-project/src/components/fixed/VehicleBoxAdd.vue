@@ -5,20 +5,22 @@
         <div class="text-h6">Add New Vehicle</div>
       </q-card-section>
 
-      <q-card-section>
-        <q-input
-          v-model="AddForm.name"
-          label="Name"
-          :rules="[(val) => (val && val.length > 0) || 'please enter vehicle name']"
-        />
-        <q-input
-          v-model="AddForm.license"
-          label="License"
-          :rules="[(val) => (val && val.length > 0) || 'please enter vehicle license']"
-        />
-        <q-input v-model="AddForm.company" label="Company" />
-        <q-input v-model="AddForm.model" label="Model" />
-      </q-card-section>
+      <q-scroll-area style="height: 300px">
+        <q-card-section>
+          <q-input
+            v-model="AddForm.name"
+            label="Name"
+            :rules="[(val) => (val && val.length > 0) || 'please enter vehicle name']"
+          />
+          <q-input
+            v-model="AddForm.license"
+            label="License"
+            :rules="[(val) => (val && val.length > 0) || 'please enter vehicle license']"
+          />
+          <q-input v-model="AddForm.company" label="Company" />
+          <q-input v-model="AddForm.model" label="Model" />
+        </q-card-section>
+      </q-scroll-area>
 
       <q-card-actions align="evenly">
         <q-btn flat color="primary" label="Add" type="submit" :disable="IsDialogFormSubmitting" />
