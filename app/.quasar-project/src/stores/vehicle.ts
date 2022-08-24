@@ -94,7 +94,7 @@ const OnEditSubmit = async () => {
 };
 
 // list
-const vehicleList = ref(<vehicle[]>{});
+const vehicleList = ref(<vehicle[]>[]);
 const getVehicliList = async () => {
   const response = await axiosRequest('GET', '/api/vehicle/list');
   if (response.result && response.data instanceof Array) {
