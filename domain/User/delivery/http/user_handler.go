@@ -2,6 +2,7 @@ package http
 
 import (
 	"car-record/entities"
+	"car-record/middleware"
 	"car-record/tools"
 
 	"github.com/gin-gonic/gin"
@@ -20,6 +21,13 @@ func NewUserHttpHandler(r *gin.RouterGroup, uu entities.UserUsecase) {
 	r.POST("/login", handler.Login)
 	r.POST("/logout", handler.Logout)
 }
+func NewAuthorizedUserHttpHandler(ar *gin.RouterGroup, uu entities.UserUsecase) {
+	handler := &userHttpHandler{
+		UUsecase: uu,
+	}
+
+	ar.GET("/", handler.GetAuth)
+}
 
 type registerBody struct {
 	Username string `json:"username" binding:"required"`
@@ -29,11 +37,23 @@ type registerResponse struct {
 	tools.GinResponse
 	Data string `json:"data"`
 }
+type loginBody struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+type loginResponse struct {
+	tools.GinResponse
+	Data string `json:"data"`
+}
+type authResponse struct {
+	tools.GinResponse
+	Data entities.User `json:"data"`
+}
 
-// Register godoc
+// User Register godoc
 // @Summary      Register
 // @Description  Create account and get login token
-// @Tags         user
+// @Tags         User
 // @Param        body  body      registerBody  false  "post body"
 // @Success      200   {object}  registerResponse
 // @Router       /api/register [post]
@@ -58,19 +78,10 @@ func (h *userHttpHandler) Register(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-type loginBody struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-type loginResponse struct {
-	tools.GinResponse
-	Data string `json:"data"`
-}
-
-// Login godoc
+// User Login godoc
 // @Summary      Login
 // @Description  Login and get login token
-// @Tags         user
+// @Tags         User
 // @Param        body  body      registerBody  false  "post body"
 // @Success      200   {object}  registerResponse
 // @Router       /api/login [post]
@@ -95,10 +106,10 @@ func (h *userHttpHandler) Login(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Logout godoc
+// User Logout godoc
 // @Summary      Logout
 // @Description  get by header token and remove db token
-// @Tags         user
+// @Tags         User
 // @Success      200
 // @Router       /api/logout [post]
 func (h *userHttpHandler) Logout(c *gin.Context) {
@@ -116,6 +127,27 @@ func (h *userHttpHandler) Logout(c *gin.Context) {
 		return
 	}
 
+	response.Result = 1
+	c.AbortWithStatusJSON(200, response)
+}
+
+// User GetAuth godoc
+// @Summary      GetAuth
+// @Description  Get user's authorized information
+// @Tags         User
+// @Success      200  {object}  authResponse
+// @Router       /api/user/ [get]
+func (h *userHttpHandler) GetAuth(c *gin.Context) {
+	response := authResponse{}
+
+	user, getMiddlewareAuthorizeErr := middleware.GetMiddlewareAuthorize(c)
+	if getMiddlewareAuthorizeErr != nil {
+		response.Error = getMiddlewareAuthorizeErr.Error()
+		c.AbortWithStatusJSON(400, response)
+		return
+	}
+
+	response.Data = user
 	response.Result = 1
 	c.AbortWithStatusJSON(200, response)
 }

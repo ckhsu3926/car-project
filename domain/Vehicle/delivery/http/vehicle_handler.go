@@ -62,10 +62,10 @@ type getListResponse struct {
 	Data []entities.Vehicle `json:"data"`
 }
 
-// Vehicle godoc
+// Vehicle Get godoc
 // @Summary      Get Vehicle
 // @Description  Get User's Vehicle Detail
-// @Tags         vehicle
+// @Tags         Vehicle
 // @Param        vehicleID  query     uint  true  "Vehicle ID"
 // @Success      200        {object}  getDetailResponse
 // @Router       /api/vehicle/ [get]
@@ -91,10 +91,10 @@ func (h *vehicleHttpHandler) Get(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Vehicle godoc
+// Vehicle Add godoc
 // @Summary      Add
 // @Description  Create vehicle
-// @Tags         vehicle
+// @Tags         Vehicle
 // @Param        body  body      addBody  false  "post body"
 // @Success      200   {object}  getListResponse
 // @Router       /api/vehicle/add [post]
@@ -133,10 +133,10 @@ func (h *vehicleHttpHandler) Add(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Vehicle godoc
+// Vehicle Edit godoc
 // @Summary      Edit
 // @Description  Edit vehicle detail
-// @Tags         vehicle
+// @Tags         Vehicle
 // @Param        body  body      editBody  false  "put body"
 // @Success      200   {object}  getDetailResponse
 // @Router       /api/vehicle/edit [put]
@@ -189,10 +189,10 @@ func (h *vehicleHttpHandler) Edit(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Vehicle godoc
+// Vehicle GetList godoc
 // @Summary      Get List
 // @Description  Get User's Vehicle List
-// @Tags         vehicle
+// @Tags         Vehicle
 // @Success      200        {object}  getListResponse
 // @Router       /api/vehicle/list [get]
 func (h *vehicleHttpHandler) GetList(c *gin.Context) {
@@ -216,10 +216,10 @@ func (h *vehicleHttpHandler) GetList(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Vehicle godoc
+// Vehicle Delete godoc
 // @Summary      Delete
 // @Description  Delete vehicle
-// @Tags         vehicle
+// @Tags         Vehicle
 // @Param        vehicleID  query     uint  true  "Vehicle ID"
 // @Success      200  {object}  getListResponse
 // @Router       /api/vehicle/delete [delete]

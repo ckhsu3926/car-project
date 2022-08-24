@@ -33,10 +33,10 @@ type addResponse struct {
 	Data []entities.UserGasStation `json:"data"`
 }
 
-// UserGasStation godoc
+// UserGasStation Add godoc
 // @Summary      Add
 // @Description  Create user's station record
-// @Tags         userGasStation
+// @Tags         UserGasStation
 // @Param        body  body      addBody  false  "post body"
 // @Success      200  {object}  addResponse
 // @Router       /api/user/gas/station/add [post]
@@ -75,10 +75,10 @@ func (h *userGasStationHttpHandler) Add(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// UserGasStation godoc
+// UserGasStation GetList godoc
 // @Summary      GetList
 // @Description  Get user's station record
-// @Tags         userGasStation
+// @Tags         UserGasStation
 // @Success      200   {object}  addResponse
 // @Router       /api/user/gas/station/list [get]
 func (h *userGasStationHttpHandler) GetList(c *gin.Context) {
@@ -102,10 +102,10 @@ func (h *userGasStationHttpHandler) GetList(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// UserGasStation godoc
+// UserGasStation Delete godoc
 // @Summary      Delete
 // @Description  Delete user's station record
-// @Tags         userGasStation
+// @Tags         UserGasStation
 // @Param        body  body      deleteBody  false  "post body"
 // @Success      200   {object}  addResponse
 // @Router       /api/user/gas/station/delete [delete]

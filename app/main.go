@@ -72,6 +72,7 @@ func main() {
 	// need authorize api
 	authorizeMiddleware := _middleware.NewAuthorizeMiddleware(userUsecase)
 	authorizedApiRouter := apiRouter.Group("", authorizeMiddleware.Authorize())
+	_userDeliveryHttp.NewAuthorizedUserHttpHandler(authorizedApiRouter.Group("user"), userUsecase)
 
 	vehicleRepo := _vehicleRepositoryMysql.NewMysqlVehicleRepository(mysqlConnection)
 	vehicleUsecase := _vehicleUsecase.NewVehicleUsecase(vehicleRepo, timeContext)

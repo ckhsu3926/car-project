@@ -8,9 +8,9 @@ import (
 )
 
 type GinResponse struct {
-	Result int         `json:"result"`
+	Result int         `json:"result" example:"1"`
 	Data   interface{} `json:"data"`
-	Error  string      `json:"error,omitempty"`
+	Error  string      `json:"error,omitempty" example:""`
 }
 
 // Print error debug and abort with 400 response

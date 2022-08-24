@@ -43,10 +43,10 @@ type refuelingResponse struct {
 	Data []entities.RefuelingRecord `json:"data"`
 }
 
-// Refueling godoc
+// Refueling Add godoc
 // @Summary      Add
 // @Description  Add vehicle's refueling record
-// @Tags         refueling
+// @Tags         Refueling
 // @Param        body  body      refueling  false  "post body"
 // @Success      200                {object}  refuelingResponse
 // @Router       /api/refueling/add [post]
@@ -90,10 +90,10 @@ func (h *refuelingHttpHandler) Add(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Refueling godoc
+// Refueling GetList godoc
 // @Summary      GetList
 // @Description  Get vehicle's refueling record list
-// @Tags         refueling
+// @Tags         Refueling
 // @Param        vehicleID  query     uint  true  "Vehicle ID"
 // @Success      200   {object}  refuelingResponse
 // @Router       /api/refueling/list [get]
@@ -119,10 +119,10 @@ func (h *refuelingHttpHandler) GetList(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Refueling godoc
+// Refueling Update godoc
 // @Summary      Update
 // @Description  Update vehicle's refueling record
-// @Tags         refueling
+// @Tags         Refueling
 // @Param        body  body      refueling  false  "post body"
 // @Success      200   {object}  refuelingResponse
 // @Router       /api/refueling/update [put]
@@ -166,10 +166,10 @@ func (h *refuelingHttpHandler) Update(c *gin.Context) {
 	c.AbortWithStatusJSON(200, response)
 }
 
-// Refueling godoc
+// Refueling Delete godoc
 // @Summary      Delete
 // @Description  Delete vehicle's refueling record
-// @Tags         refueling
+// @Tags         Refueling
 // @Param        vehicleID          query     uint  true  "Vehicle ID"
 // @Param        refuelingRecordID  query     uint  true  "Refueling Record ID"
 // @Success      200        {object}  refuelingResponse
