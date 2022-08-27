@@ -180,7 +180,7 @@ func (h *maintenanceHttpHandler) UpdateRecord(c *gin.Context) {
 func (h *maintenanceHttpHandler) DeleteRecord(c *gin.Context) {
 	response := maintenanceRecordResponse{}
 
-	vehicleIDString := c.Query("recordID")
+	vehicleIDString := c.Query("vehicleID")
 	vehicleID, atoiErr := strconv.Atoi(vehicleIDString)
 	if vehicleIDString == "" || atoiErr != nil {
 		response.Error = "invalid vehicle id"

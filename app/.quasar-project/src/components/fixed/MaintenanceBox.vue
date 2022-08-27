@@ -1,18 +1,18 @@
 <template>
-  <q-dialog v-model="isRefuelingDialogOpen">
+  <q-dialog v-model="isMaintenanceDialogOpen">
     <q-card class="q-ma-xs">
       <q-form @submit="onSubmit">
         <q-card-section class="bg-light-blue text-white">
-          <div class="text-h6">{{ refuelingDialogMode === 'add' ? 'Add' : 'Edit' }} New Refueling Record</div>
+          <div class="text-h6">{{ maintenanceDialogMode === 'add' ? 'Add' : 'Edit' }} New Maintenance Record</div>
         </q-card-section>
 
-        <RefuelingBoxInput />
+        <MaintenanceBoxInput />
 
         <q-card-actions align="evenly">
           <q-btn
             flat
             color="primary"
-            :label="refuelingDialogMode === 'add' ? 'Add' : 'Edit'"
+            :label="maintenanceDialogMode === 'add' ? 'Add' : 'Edit'"
             type="submit"
             :disable="isDialogFormSubmitting"
           />
@@ -24,19 +24,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import refuelingStore from 'stores/refueling';
-import RefuelingBoxInput from 'components/fixed/RefuelingBoxInput.vue';
+import maintenanceStore from 'stores/maintenance';
+import MaintenanceBoxInput from 'components/fixed/MaintenanceBoxInput.vue';
 
 export default defineComponent({
-  name: 'RefuelingBox',
-  components: { RefuelingBoxInput },
+  name: 'MaintenanceBox',
+  components: { MaintenanceBoxInput },
 
   setup() {
-    const { isRefuelingDialogOpen, refuelingDialogMode, OnAddSubmit, isDialogFormSubmitting, OnEditSubmit } =
-      refuelingStore();
+    const { isMaintenanceDialogOpen, maintenanceDialogMode, OnAddSubmit, isDialogFormSubmitting, OnEditSubmit } =
+      maintenanceStore();
 
     const onSubmit = () => {
-      if (refuelingDialogMode.value === 'add') {
+      if (maintenanceDialogMode.value === 'add') {
         OnAddSubmit();
       } else {
         OnEditSubmit();
@@ -44,8 +44,8 @@ export default defineComponent({
     };
 
     return {
-      isRefuelingDialogOpen,
-      refuelingDialogMode,
+      isMaintenanceDialogOpen,
+      maintenanceDialogMode,
       onSubmit,
       isDialogFormSubmitting,
     };

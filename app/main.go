@@ -88,7 +88,7 @@ func main() {
 
 	maintenanceRepo := _maintenanceRepositoryMysql.NewMysqlMaintenanceRepository(mysqlConnection)
 	maintenanceUsecase := _maintenanceUsecase.NewMaintenanceUsecase(maintenanceRepo, timeContext)
-	_maintenanceDeliveryHttp.NewMaintenanceHttpHandler(authorizedApiRouter.Group("mantenance"), maintenanceUsecase)
+	_maintenanceDeliveryHttp.NewMaintenanceHttpHandler(authorizedApiRouter.Group("maintenance"), maintenanceUsecase)
 
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

@@ -89,7 +89,7 @@ import gasStationStore from 'stores/gasStation';
 import moment from 'moment';
 
 export default defineComponent({
-  name: 'RefuelingAddBoxInput',
+  name: 'RefuelingBoxInput',
 
   setup() {
     const { refuelingDialogForm } = refuelingStore();

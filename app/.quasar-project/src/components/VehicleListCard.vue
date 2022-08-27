@@ -19,7 +19,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable>
+      <q-item clickable :to="`/vehicle/maintenance/${Vehicle.id}`">
         <q-item-section avatar>
           <q-icon color="red" name="build" />
         </q-item-section>
