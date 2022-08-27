@@ -1,8 +1,6 @@
 <template>
   <q-page padding>
     <VehicleListComponent />
-    <!-- Refueling Record -->
-    <!-- Maintenance Record -->
   </q-page>
 </template>
 

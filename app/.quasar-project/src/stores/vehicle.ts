@@ -40,7 +40,7 @@ const clearAddForm = () => {
   AddForm.company = '';
   AddForm.model = '';
 };
-const IsDialogFormSubmitting = ref(false);
+const isDialogFormSubmitting = ref(false);
 
 const OnAddOpen = () => {
   IsVehicleBoxOpen.value = true;
@@ -50,7 +50,7 @@ const OnAddOpen = () => {
   return;
 };
 const OnAddSubmit = async () => {
-  IsDialogFormSubmitting.value = true;
+  isDialogFormSubmitting.value = true;
   const response = await axiosRequest('POST', '/api/vehicle/add', {
     name: AddForm.name,
     license: AddForm.license,
@@ -59,14 +59,14 @@ const OnAddSubmit = async () => {
   });
   if (response.result) {
     IsVehicleBoxOpen.value = false;
-    IsDialogFormSubmitting.value = false;
+    isDialogFormSubmitting.value = false;
 
     if (response.data instanceof Array) {
       vehicleList.value = response.data;
     }
   } else {
     OnAddOpen();
-    IsDialogFormSubmitting.value = false;
+    isDialogFormSubmitting.value = false;
   }
 
   return;
@@ -75,10 +75,10 @@ const OnAddSubmit = async () => {
 // dialog-edit
 const EditForm = ref(<vehicleDetail>{});
 const OnEditSubmit = async () => {
-  IsDialogFormSubmitting.value = true;
+  isDialogFormSubmitting.value = true;
   const response = await axiosRequest('PUT', '/api/vehicle/edit', EditForm.value);
   if (response.result) {
-    IsDialogFormSubmitting.value = false;
+    isDialogFormSubmitting.value = false;
 
     if (response.data instanceof Object) {
       EditForm.value = <vehicleDetail>response.data;
@@ -86,7 +86,7 @@ const OnEditSubmit = async () => {
     Notify.create({ type: 'positive', message: 'Success!' });
     getVehicliList();
   } else {
-    IsDialogFormSubmitting.value = false;
+    isDialogFormSubmitting.value = false;
     Notify.create({ type: 'negative', message: 'Failed!' });
   }
 
@@ -123,7 +123,7 @@ export default () => {
     AddForm,
     OnAddOpen,
     OnAddSubmit,
-    IsDialogFormSubmitting,
+    isDialogFormSubmitting,
     // edit
     EditForm,
     OnEditSubmit,

@@ -26,7 +26,7 @@ var mockRecord entities.RefuelingRecord = entities.RefuelingRecord{
 	Count:             decimal.NewFromFloat(28.3),
 	Value:             283,
 	Mileage:           decimal.NewFromFloat(3456.7),
-	MointorFuelRecord: decimal.NewFromFloat(18.3),
+	MonitorFuelRecord: decimal.NewFromFloat(18.3),
 }
 var mockUpdatedRecord = entities.RefuelingRecord{
 	VehicleID:         mockVehicleID,
@@ -37,7 +37,7 @@ var mockUpdatedRecord = entities.RefuelingRecord{
 	Count:             decimal.NewFromFloat(28.3),
 	Value:             283,
 	Mileage:           decimal.NewFromFloat(3456.7),
-	MointorFuelRecord: decimal.NewFromFloat(18.3),
+	MonitorFuelRecord: decimal.NewFromFloat(18.3),
 }
 
 func TestAdd(t *testing.T) {

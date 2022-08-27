@@ -3,7 +3,7 @@
     <q-form @submit="OnEditSubmit">
       <q-card-section class="bg-light-blue text-white row justify-between">
         <div class="text-h6">Edit Vehicle</div>
-        <q-btn float round icon="done" size="sm" color="secondary" type="submit" :disable="IsDialogFormSubmitting" />
+        <q-btn float round icon="done" size="sm" color="secondary" type="submit" :disable="isDialogFormSubmitting" />
       </q-card-section>
 
       <q-scroll-area style="height: 60vh">
@@ -92,14 +92,14 @@ export default defineComponent({
   name: 'LoginBoxEdit',
 
   setup() {
-    const { EditForm, OnEditSubmit, IsDialogFormSubmitting } = vehicleStore();
+    const { EditForm, OnEditSubmit, isDialogFormSubmitting } = vehicleStore();
 
     const now = moment().format('YYYY/MM/DD');
 
     return {
       EditForm,
       OnEditSubmit,
-      IsDialogFormSubmitting,
+      isDialogFormSubmitting,
 
       now,
     };

@@ -15,7 +15,7 @@ func (maintenanceRecord) TableName() string {
 
 type maintenanceRecord struct {
 	ID        uint            `gorm:"primaryKey;column:id"`
-	VehicleID uint            `gorm:"column:vehicleID"`
+	VehicleID uint            `gorm:"column:vehicle_id"`
 	Date      string          `gorm:"column:date"`
 	Mileage   decimal.Decimal `gorm:"column:mileage"`
 	Shop      string          `gorm:"column:shop"`

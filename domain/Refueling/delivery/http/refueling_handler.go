@@ -30,12 +30,12 @@ type refueling struct {
 	VehicleID         uint            `json:"vehicleID" binding:"required"`
 	Date              string          `json:"date" binding:"required"`
 	Station           string          `json:"station" binding:"required"`
-	OctaneNumber      int             `json:"octaneNumber" binding:"required"`
+	OctaneNumber      int             `json:"octaneNumber"`
 	UnitPrice         decimal.Decimal `json:"unitPrice"`
 	Count             decimal.Decimal `json:"count"`
 	Value             int             `json:"value" binding:"required"`
 	Mileage           decimal.Decimal `json:"mileage" binding:"required"`
-	MointorFuelRecord decimal.Decimal `json:"mointorFuelRecord"`
+	MonitorFuelRecord decimal.Decimal `json:"monitorFuelRecord"`
 }
 
 type refuelingResponse struct {
@@ -70,7 +70,7 @@ func (h *refuelingHttpHandler) Add(c *gin.Context) {
 		Count:             body.Count,
 		Value:             body.Value,
 		Mileage:           body.Mileage,
-		MointorFuelRecord: body.MointorFuelRecord,
+		MonitorFuelRecord: body.MonitorFuelRecord,
 	}
 
 	addErr := h.Usecase.Add(c.Request.Context(), record)
@@ -146,7 +146,7 @@ func (h *refuelingHttpHandler) Update(c *gin.Context) {
 		Count:             body.Count,
 		Value:             body.Value,
 		Mileage:           body.Mileage,
-		MointorFuelRecord: body.MointorFuelRecord,
+		MonitorFuelRecord: body.MonitorFuelRecord,
 	}
 
 	updateErr := h.Usecase.Update(c.Request.Context(), record)

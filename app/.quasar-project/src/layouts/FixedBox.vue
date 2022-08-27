@@ -2,6 +2,7 @@
   <div>
     <LoginBox />
     <VehicleBox />
+    <RefuelingBox />
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { defineComponent } from 'vue';
 import LoginBox from 'components/fixed/LoginBox.vue';
 import VehicleBox from 'components/fixed/VehicleBox.vue';
+import RefuelingBox from 'components/fixed/RefuelingBox.vue';
 
 export default defineComponent({
   name: 'FixedBox',
@@ -16,6 +18,7 @@ export default defineComponent({
   components: {
     LoginBox,
     VehicleBox,
+    RefuelingBox,
   },
 });
 </script>

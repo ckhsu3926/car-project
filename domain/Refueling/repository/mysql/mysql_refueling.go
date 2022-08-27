@@ -15,15 +15,15 @@ func (refueling) TableName() string {
 
 type refueling struct {
 	ID                uint            `gorm:"primaryKey;column:id"`
-	VehicleID         uint            `gorm:"column:vehicleID"`
+	VehicleID         uint            `gorm:"column:vehicle_id"`
 	Date              string          `gorm:"column:date"`
 	Station           string          `gorm:"column:station"`
-	OctaneNumber      int             `gorm:"column:octaneNumber"`
-	UnitPrice         decimal.Decimal `gorm:"column:unitPrice"`
+	OctaneNumber      int             `gorm:"column:octane_number"`
+	UnitPrice         decimal.Decimal `gorm:"column:unit_price"`
 	Count             decimal.Decimal `gorm:"column:count"`
 	Value             int             `gorm:"column:value"`
 	Mileage           decimal.Decimal `gorm:"column:mileage"`
-	MointorFuelRecord decimal.Decimal `gorm:"column:mointorFuelRecord"`
+	MonitorFuelRecord decimal.Decimal `gorm:"column:monitor_fuel_record"`
 }
 
 type mysqlRefuelingRepository struct {
@@ -44,7 +44,7 @@ func (r *mysqlRefuelingRepository) Add(ctx context.Context, record entities.Refu
 		Count:             record.Count,
 		Value:             record.Value,
 		Mileage:           record.Mileage,
-		MointorFuelRecord: record.MointorFuelRecord,
+		MonitorFuelRecord: record.MonitorFuelRecord,
 	}
 	err = r.Conn.WithContext(ctx).Create(&newRecord).Error
 
@@ -72,7 +72,7 @@ func (r *mysqlRefuelingRepository) GetList(ctx context.Context, vehicleID uint) 
 			Count:             v.Count,
 			Value:             v.Value,
 			Mileage:           v.Mileage,
-			MointorFuelRecord: v.MointorFuelRecord,
+			MonitorFuelRecord: v.MonitorFuelRecord,
 		})
 	}
 
@@ -90,7 +90,7 @@ func (r *mysqlRefuelingRepository) Update(ctx context.Context, record entities.R
 		Count:             record.Count,
 		Value:             record.Value,
 		Mileage:           record.Mileage,
-		MointorFuelRecord: record.MointorFuelRecord,
+		MonitorFuelRecord: record.MonitorFuelRecord,
 	}
 	err = r.Conn.WithContext(ctx).Save(&newRecord).Error
 

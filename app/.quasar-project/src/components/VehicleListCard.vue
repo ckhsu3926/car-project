@@ -8,7 +8,7 @@
     </q-card-section>
 
     <q-list>
-      <q-item clickable>
+      <q-item clickable :to="`/vehicle/refueling/${Vehicle.id}`">
         <q-item-section avatar>
           <q-icon color="green" name="local_gas_station" />
         </q-item-section>

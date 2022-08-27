@@ -16,7 +16,7 @@ type RefuelingRecord struct {
 	Count             decimal.Decimal `json:"count"`
 	Value             int             `json:"value"`
 	Mileage           decimal.Decimal `json:"mileage"`
-	MointorFuelRecord decimal.Decimal `json:"mointorFuelRecord"`
+	MonitorFuelRecord decimal.Decimal `json:"monitorFuelRecord"`
 }
 
 type RefuelingUsecase interface {
