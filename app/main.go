@@ -90,13 +90,15 @@ func main() {
 	maintenanceUsecase := _maintenanceUsecase.NewMaintenanceUsecase(maintenanceRepo, timeContext)
 	_maintenanceDeliveryHttp.NewMaintenanceHttpHandler(authorizedApiRouter.Group("maintenance"), maintenanceUsecase)
 
+	// TODO package for envirement
 	// gin swagger
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	// setup frontend dist spa
 	r.Use(spa.Middleware("/", config.EnvConfig.FrontEndDir))
 
-	if err := r.Run("localhost:" + config.EnvConfig.Port); err != nil {
+	// TODO product ssl
+	if err := r.Run(config.EnvConfig.Host + ":" + config.EnvConfig.Port); err != nil {
 		panic(err)
 	}
 }

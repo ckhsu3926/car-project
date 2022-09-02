@@ -130,4 +130,8 @@ before-run-frontend:
 	@exit 0
 
 run:
-	cd "$(PROJECT_ROOT_DIR)" && go run "$(PROJECT_ROOT_DIR)/app"
+	cd "$(PROJECT_ROOT_DIR)" && go run ./app
+
+build-freebsd-rpi3:
+	cd "$(PROJECT_ROOT_DIR)" && GOOS=freebsd GOARCH=arm64 go build -o dist/car-project_freebsd_rpi3 ./app
+	cd "$(PROJECT_ROOT_DIR)/app/.quasar-project" && quasar build

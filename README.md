@@ -1,12 +1,15 @@
 # car-project
 
 ## Changelog
+
 - **v1**: developing
 
 ## Description
+
 This is a personal side project to record vehicle information.
 
 Using Technical:
+
 - Golang
   - [Go Clean Architecture](https://github.com/bxcodec/go-clean-arch)
     - [Gin-Gonic](https://gin-gonic.com/)
@@ -19,11 +22,12 @@ Using Technical:
 - Mysql 5.7
 
 ## System Requirement
+
 - Golang 1.16+
 - Node 12+
 - Quasar CLI 1.3.2+
 
-*Make Sure you have set **GOROOT**/bin, **GOPATH**/bin into your env **PATH***
+\*Make Sure you have set **GOROOT**/bin, **GOPATH**/bin into your env **PATH\***
 
 ## Install
 
@@ -48,7 +52,7 @@ $ make test-cover
 
 ## Before Run
 
-``` bash
+```bash
 $ make before-run-backend
 # Includes
   $ make mockery
@@ -65,4 +69,13 @@ $ make before-run-frontend
 
 ```bash
 $ make run
+```
+
+## Deploy To FreeBSD@RPi3
+
+```bash
+$ make build-freebsd-rpi3
+$ scp dist/car-project_freebsd_rpi3 => REMOTE_SERVER
+$ scp config.yaml => REMOTE_SERVER
+$ scp app/.quasar-project/dist/spa/* => REMOTE_SERVER/www
 ```

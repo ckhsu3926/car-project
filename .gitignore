@@ -3,7 +3,8 @@ _*
 engine
 bin/
 
-docs
+docs/
+.vscode/
 
 # Binaries for programs and plugins
 *.exe
@@ -11,6 +12,7 @@ docs
 *.dll
 *.so
 *.dylib
+dist/
 
 # Test binary, built with `go test -c`
 *.test
