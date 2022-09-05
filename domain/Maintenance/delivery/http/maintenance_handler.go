@@ -46,7 +46,7 @@ type maintenanceRecordResponse struct {
 type maintenanceRecordDetail struct {
 	Name    string `json:"name" binding:"required"`
 	Value   int    `json:"value" binding:"required"`
-	Content string `json:"content" binding:"required"`
+	Content string `json:"content"`
 }
 type maintenanceRecordDetailResponse struct {
 	tools.GinResponse
@@ -223,7 +223,7 @@ func (h *maintenanceHttpHandler) DeleteRecord(c *gin.Context) {
 // @Success      200                  {object}  maintenanceRecordDetailResponse
 // @Router       /api/maintenance/record/detail/ [get]
 func (h *maintenanceHttpHandler) GetDetailList(c *gin.Context) {
-	response := maintenanceRecordDetailResponse{}
+	response := maintenanceRecordDetailResponse{Data: []maintenanceRecordDetail{}}
 
 	maintenanceRecordIDString := c.Query("maintenanceRecordID")
 	maintenanceRecordID, atoiErr := strconv.Atoi(maintenanceRecordIDString)

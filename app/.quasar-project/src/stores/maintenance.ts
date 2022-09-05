@@ -59,20 +59,6 @@ const OnAddSubmit = async () => {
   }
 };
 
-// delete
-const OnDeleteSubmit = async (vehicleID: number, maintenanceRecordID: number) => {
-  Dialog.create({
-    title: 'Delete Maintenance Record',
-    message: 'Are you sure to delete maintenance record ?',
-    cancel: true,
-  }).onOk(async () => {
-    const response = await axiosRequest('DELETE', '/api/maintenance/record/delete', { vehicleID, maintenanceRecordID });
-    if (response.result && response.data instanceof Array) {
-      maintenanceList.value = <maintenanceRecord[]>response.data;
-    }
-  });
-};
-
 // edit
 const OnEditOpen = (row: maintenanceRecord) => {
   isMaintenanceDialogOpen.value = true;
@@ -96,6 +82,45 @@ const OnEditSubmit = async () => {
   }
 };
 
+// delete
+const OnDeleteSubmit = async (vehicleID: number, maintenanceRecordID: number) => {
+  Dialog.create({
+    title: 'Delete Maintenance Record',
+    message: 'Are you sure to delete maintenance record ?',
+    cancel: true,
+  }).onOk(async () => {
+    const response = await axiosRequest('DELETE', '/api/maintenance/record/delete', { vehicleID, maintenanceRecordID });
+    if (response.result && response.data instanceof Array) {
+      maintenanceList.value = <maintenanceRecord[]>response.data;
+    }
+  });
+};
+
+// detail
+const isMaintenanceDetailDialogOpen = ref(false);
+const dialogMaintenanceID = ref(0);
+const maintenanceDetailList = ref(<maintenanceRecordDetail[]>[]);
+const onRowClick = async (row: maintenanceRecord) => {
+  dialogMaintenanceID.value = row.id;
+  const response = await axiosRequest('GET', '/api/maintenance/record/detail/', {
+    maintenanceRecordID: dialogMaintenanceID.value,
+  });
+  if (response.result && response.data instanceof Array) {
+    maintenanceDetailList.value = <maintenanceRecordDetail[]>response.data;
+    isMaintenanceDetailDialogOpen.value = true;
+  }
+};
+const updateMaintenanceDetailList = async () => {
+  const response = await axiosRequest(
+    'POST',
+    `/api/maintenance/record/detail/?maintenanceRecordID=${dialogMaintenanceID.value}`,
+    maintenanceDetailList.value
+  );
+  if (response.result && response.data instanceof Array) {
+    maintenanceDetailList.value = <maintenanceRecordDetail[]>response.data;
+  }
+};
+
 export default () => {
   return {
     // // dialog
@@ -114,5 +139,11 @@ export default () => {
     maintenanceList,
     getMaintenanceList,
     OnDeleteSubmit,
+
+    // detail
+    onRowClick,
+    isMaintenanceDetailDialogOpen,
+    maintenanceDetailList,
+    updateMaintenanceDetailList,
   };
 };

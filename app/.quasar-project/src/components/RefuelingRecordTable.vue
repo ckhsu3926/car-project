@@ -2,6 +2,7 @@
   <q-table :grid="$q.screen.xs" :rows="list" :columns="columns" row-key="id" :rows-per-page-options="[20, 50]">
     <template v-slot:top>
       <div class="q-table__title">Refueling Record</div>
+      <q-btn flat icon="reply" color="accent" to="/vehicle" />
       <q-space />
       <q-btn color="secondary" label="Add" @click="OnAddOpen(vehicleID)" />
     </template>

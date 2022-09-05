@@ -1,5 +1,5 @@
 <template>
-  <q-page padding> user feature to be continue ... </q-page>
+  <q-page padding>feature to be continue ... </q-page>
 </template>
 
 <script lang="ts">

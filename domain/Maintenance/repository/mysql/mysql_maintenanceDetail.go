@@ -58,8 +58,10 @@ func (r *mysqlMaintenanceRepository) SetDetailList(ctx context.Context, recordID
 			return deleteErr
 		}
 
-		if createErr := tx.Create(&newList).Error; createErr != nil {
-			return createErr
+		if len(detailList) > 0 {
+			if createErr := tx.Create(&newList).Error; createErr != nil {
+				return createErr
+			}
 		}
 
 		return nil
