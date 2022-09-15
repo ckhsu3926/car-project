@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable tag="a" :to="to">
+  <q-item clickable tag="a" :to="to" :disable="disabled">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -35,6 +35,11 @@ export default defineComponent({
     icon: {
       type: String,
       default: '',
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 });

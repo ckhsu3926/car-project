@@ -76,7 +76,7 @@
         label="Monitor Fuel Record"
         type="number"
         step="0.1"
-        :rules="[(val) => (val && val < 100) || '']"
+        :rules="[(val) => !val || (0 < val && val < 100) || '']"
       />
     </q-card-section>
   </q-scroll-area>

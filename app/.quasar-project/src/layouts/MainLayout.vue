@@ -2,14 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
           <q-btn flat to="/">Car Project</q-btn>
@@ -24,11 +17,7 @@
         <q-list>
           <q-item-label header> Internal Links </q-item-label>
 
-          <EssentialLink
-            v-for="link in essentialLinks"
-            :key="link.title"
-            v-bind="link"
-          />
+          <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link" />
         </q-list>
         <q-btn flat color="secondary" @click="logout">logout</q-btn>
       </div>
@@ -55,6 +44,7 @@ const linksList = [
     caption: 'User Info',
     icon: 'person',
     to: '/user',
+    disabled: true,
   },
   {
     title: 'Gas Station',

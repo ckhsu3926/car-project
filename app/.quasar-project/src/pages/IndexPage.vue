@@ -14,6 +14,7 @@ const linksList = [
     caption: 'User Info',
     icon: 'person',
     to: '/user',
+    disabled: true,
   },
   {
     title: 'Gas Station',

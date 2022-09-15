@@ -1,5 +1,13 @@
 <template>
-  <q-card class="index-card q-ma-sm bg-secondary text-white cursor-pointer" v-ripple @click="$router.push(to)">
+  <q-card
+    class="index-card q-ma-sm text-white"
+    :class="{
+      'bg-dark': disabled,
+      'bg-secondary': !disabled,
+      'cursor-pointer': !disabled,
+    }"
+    @click="disabled ? null : $router.push(to)"
+  >
     <div class="row justify-center q-mt-md">
       <q-icon :name="icon" />
     </div>
@@ -45,6 +53,11 @@ export default defineComponent({
     icon: {
       type: String,
       default: '',
+    },
+
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
 });

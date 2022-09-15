@@ -8,10 +8,15 @@
     @row-click="(_, row) => onRowClick(row)"
   >
     <template #top>
-      <div class="q-table__title">Maintenance Record</div>
-      <q-btn flat icon="reply" color="accent" to="/vehicle" />
-      <q-space />
-      <q-btn color="secondary" label="Add" @click="OnAddOpen(vehicleID)" />
+      <div class="row full-width">
+        <div class="q-table__title">Maintenance Record</div>
+        <q-btn flat icon="reply" color="accent" to="/vehicle" />
+        <q-space />
+        <q-btn color="secondary" label="Add" @click="OnAddOpen(vehicleID)" />
+      </div>
+      <div class="row text-negative">
+        <p><q-icon name="campaign" /> Click Record for Detail</p>
+      </div>
     </template>
 
     <!-- table -->

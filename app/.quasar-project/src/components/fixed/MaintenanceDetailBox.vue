@@ -136,60 +136,38 @@
 
               <template v-if="props.rowIndex === maintenanceDetailList.length - 1">
                 <q-btn v-if="!isAdd" class="full-width" color="secondary" label="Add" @click="isAdd = !isAdd" />
-                <q-card v-else class="full-width">
-                  <q-list dense>
-                    <!-- name -->
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label>Name</q-item-label>
-                      </q-item-section>
-                      <q-item-section side>
-                        <q-input
-                          v-model="addObject.name"
-                          maxlength="45"
-                          dense
-                          hide-bottom-space
-                          autofocus
-                          :rules="[(val) => (val && val.length > 0) || 'please enter Name']"
-                        />
-                      </q-item-section>
-                    </q-item>
-                    <!-- value -->
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label>Value</q-item-label>
-                      </q-item-section>
-                      <q-item-section side>
-                        <q-input
-                          v-model.number="addObject.value"
-                          maxlength="6"
-                          dense
-                          hide-bottom-space
-                          :rules="[(val) => val > -1 || 'please enter Value']"
-                        />
-                      </q-item-section>
-                    </q-item>
-                    <!-- content -->
-                    <q-item>
-                      <q-item-section>
-                        <q-item-label>Content</q-item-label>
-                      </q-item-section>
-                      <q-item-section side>
-                        <q-input v-model="addObject.content" type="textarea" maxlength="150" rows="2" dense counter />
-                      </q-item-section>
-                    </q-item>
-                    <!-- actions -->
-                    <q-item>
-                      <q-item-section>
-                        <q-btn type="reset" size="sm" color="negative" icon="delete" @click="isAdd = !isAdd" />
-                      </q-item-section>
-                      <q-item-section>
-                        <q-btn class="q-my-sm" type="submit" size="sm" color="secondary" icon="add" />
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-card>
+                <MaintenanceDetailBoxAddCard
+                  v-else
+                  v-model:name="addObject.name"
+                  v-model:value="addObject.value"
+                  v-model:content="addObject.content"
+                >
+                  <template #actions>
+                    <q-item-section>
+                      <q-btn type="reset" size="sm" color="negative" icon="delete" @click="isAdd = !isAdd" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-btn class="q-my-sm" type="submit" size="sm" color="secondary" icon="add" />
+                    </q-item-section>
+                  </template>
+                </MaintenanceDetailBoxAddCard>
               </template>
+            </template>
+
+            <template #no-data v-if="$q.screen.xs">
+              <q-btn v-if="!isAdd" class="full-width" color="secondary" label="Add" @click="isAdd = !isAdd" />
+              <MaintenanceDetailBoxAddCard
+                v-else
+                v-model:name="addObject.name"
+                v-model:value="addObject.value"
+                v-model:content="addObject.content"
+              >
+                <template #actions>
+                  <q-item-section>
+                    <q-btn class="q-my-sm" type="submit" size="sm" color="secondary" icon="add" />
+                  </q-item-section>
+                </template>
+              </MaintenanceDetailBoxAddCard>
             </template>
           </q-table>
         </q-form>
@@ -199,9 +177,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onUpdated } from 'vue';
 import { Dialog, QForm } from 'quasar';
 import maintenanceStore, { maintenanceRecordDetail } from 'stores/maintenance';
+import MaintenanceDetailBoxAddCard from 'components/fixed/MaintenanceDetailBoxAddCard.vue';
 
 const columns = [
   {
@@ -234,7 +213,10 @@ const columns = [
 ];
 
 export default defineComponent({
-  name: 'MaintenanceBox',
+  name: 'MaintenanceDetailBox',
+  components: {
+    MaintenanceDetailBoxAddCard,
+  },
   setup() {
     const { isMaintenanceDetailDialogOpen, maintenanceDetailList, updateMaintenanceDetailList } = maintenanceStore();
 
@@ -274,6 +256,10 @@ export default defineComponent({
       }
       loading.value = false;
     };
+
+    onUpdated(() => {
+      isAdd.value = false;
+    });
 
     return {
       isMaintenanceDetailDialogOpen,

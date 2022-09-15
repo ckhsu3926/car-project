@@ -1,6 +1,7 @@
 import { ref, computed, reactive } from 'vue';
 import { axiosRequest } from 'boot/axios';
 import { Md5 } from 'ts-md5/dist/md5';
+import { RouterInterface as router } from 'src/router';
 
 export interface authInfo {
   id: number;
@@ -35,7 +36,7 @@ const login = async () => {
     token.value = response.data;
     localStorage.setItem('token', response.data);
     localStorage.setItem('username', userInfo.username || '');
-    location.reload();
+    router.push('/');
   } else {
     userInfo.password = '';
   }

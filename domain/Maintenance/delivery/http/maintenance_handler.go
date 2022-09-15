@@ -45,7 +45,7 @@ type maintenanceRecordResponse struct {
 
 type maintenanceRecordDetail struct {
 	Name    string `json:"name" binding:"required"`
-	Value   int    `json:"value" binding:"required"`
+	Value   int    `json:"value"`
 	Content string `json:"content"`
 }
 type maintenanceRecordDetailResponse struct {

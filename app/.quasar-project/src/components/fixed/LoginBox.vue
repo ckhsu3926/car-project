@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isLogin" :persistent="true">
+  <q-dialog v-model="isLogin" :persistent="true" style="background: #000">
     <q-card class="q-pa-xs">
       <q-form ref="formRef" @submit="login">
         <q-card-section>
@@ -9,9 +9,7 @@
           <q-input
             v-model="userInfo.username"
             label="Username"
-            :rules="[
-              (val) => (val && val.length > 0) || 'please enter username',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'please enter username']"
           />
         </q-card-section>
 
@@ -20,20 +18,13 @@
             v-model="userInfo.password"
             type="password"
             label="Password"
-            :rules="[
-              (val) => (val && val.length > 0) || 'please enter password',
-            ]"
+            :rules="[(val) => (val && val.length > 0) || 'please enter password']"
           />
         </q-card-section>
 
         <q-card-actions align="evenly">
           <q-btn flat color="primary" label="Login" type="submit" />
-          <q-btn
-            flat
-            color="negative"
-            label="Register"
-            @click="handlerRegister"
-          />
+          <q-btn flat color="negative" label="Register" @click="handlerRegister" />
         </q-card-actions>
       </q-form>
     </q-card>
@@ -42,7 +33,7 @@
 
 <style lang="sass" scoped>
 .q-card
-    min-width: 360px
+  min-width: 360px
 </style>
 
 <script lang="ts">
