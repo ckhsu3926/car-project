@@ -9,8 +9,8 @@ type CORSMiddleware struct{}
 
 func (m *CORSMiddleware) CORS() gin.HandlerFunc {
 	return cors.New(cors.Config{
-		AllowAllOrigins: true,
-		// AllowOrigins:    []string{},
+		// AllowAllOrigins: false,
+		AllowOrigins: []string{"http://localhost:8080"},
 		// AllowOriginFunc: func(origin string) bool {},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"content-type", "token"},

@@ -81,6 +81,10 @@ module.exports = configure(function (ctx) {
           poll: 1000,
         };
       },
+
+      env: {
+        API: ctx.dev ? 'http://localhost:8081' : '/',
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-devServer

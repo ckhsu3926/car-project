@@ -17,7 +17,7 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'http://localhost:8081' });
+const api = axios.create({ baseURL: process.env.API });
 api.interceptors.request.use((config) => {
   if (token.value) {
     config.headers['token'] = token.value;

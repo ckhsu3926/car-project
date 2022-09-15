@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# PROVIDE: car_project
+# REQUIRE: DAEMON mysql
+# KEYWORD: nojail
+
+. /etc/rc.subr
+
+name=car_project
+rcvar=car_project_enable
+
+command="/home/ckhsu/car-project_dist/run.sh"
+
+load_rc_config $name
+
+check_process()
+{
+        pgrep -f car-project_backend
+}
+
+run_rc_command "$1"

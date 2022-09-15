@@ -75,7 +75,7 @@ $ make run
 
 ```bash
 $ make build-freebsd-rpi3
-$ scp dist/car-project_freebsd_rpi3 => REMOTE_SERVER
+$ scp dist/car-project_backend => REMOTE_SERVER
 $ scp config.yaml => REMOTE_SERVER
 $ scp app/.quasar-project/dist/spa/* => REMOTE_SERVER/www
 ```

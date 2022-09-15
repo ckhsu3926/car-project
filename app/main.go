@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/mandrigin/gin-spa/spa"
 	"gorm.io/gorm"
 
 	_ "car-record/docs"
@@ -90,14 +89,11 @@ func main() {
 	maintenanceUsecase := _maintenanceUsecase.NewMaintenanceUsecase(maintenanceRepo, timeContext)
 	_maintenanceDeliveryHttp.NewMaintenanceHttpHandler(authorizedApiRouter.Group("maintenance"), maintenanceUsecase)
 
-	// TODO package for envirement
 	// gin swagger
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	if config.EnvConfig.Env == "local" {
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	}
 
-	// setup frontend dist spa
-	r.Use(spa.Middleware("/", config.EnvConfig.FrontEndDir))
-
-	// TODO product ssl
 	if err := r.Run(config.EnvConfig.Host + ":" + config.EnvConfig.Port); err != nil {
 		panic(err)
 	}
